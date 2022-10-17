@@ -81,6 +81,8 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
     translateY,
     absoluteX,
     absoluteY,
+    x,
+    y,
   } = useAnimatedValues();
 
   const reset = useStableCallback(() => {
@@ -257,6 +259,8 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
       panGestureState.value = evt.state;
       absoluteX.value = evt.absoluteX;
       absoluteY.value = evt.absoluteY;
+      x.value = evt.x;
+      y.value = evt.y;
     })
     .onUpdate((evt) => {
       if (gestureDisabled.value) return;
@@ -269,6 +273,8 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
       translateY.value = evt.translationY;
       absoluteX.value = evt.absoluteX;
       absoluteY.value = evt.absoluteY;
+      x.value = evt.x;
+      y.value = evt.y;
     })
     .onEnd((evt) => {
       if (gestureDisabled.value) return;

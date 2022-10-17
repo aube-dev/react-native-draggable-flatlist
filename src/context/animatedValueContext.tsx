@@ -162,6 +162,8 @@ function useSetupAnimatedValues<T>() {
 
   const absoluteX = useSharedValue(0);
   const absoluteY = useSharedValue(0);
+  const x = useSharedValue(0);
+  const y = useSharedValue(0);
 
   const value = useMemo(
     () => ({
@@ -190,6 +192,8 @@ function useSetupAnimatedValues<T>() {
       translateY,
       absoluteX,
       absoluteY,
+      x,
+      y,
     }),
     [
       activeCellOffset,
@@ -217,6 +221,8 @@ function useSetupAnimatedValues<T>() {
       translateY,
       absoluteX,
       absoluteY,
+      x,
+      y,
     ]
   );
 
