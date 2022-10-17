@@ -10,7 +10,7 @@
     "test": "jest",
     "typecheck": "tsc --skipLibCheck --noEmit",
     "build": "bob build",
-    "install": "npm run build"
+    "prepare": "npm run build"
   },
   "husky": {
     "hooks": {
