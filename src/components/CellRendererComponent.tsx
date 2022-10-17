@@ -35,7 +35,12 @@ function CellRendererComponent<T>(props: Props<T>) {
   const viewRef = useRef<Animated.View>(null);
   const { cellDataRef, propsRef, containerRef } = useRefs<T>();
 
-  const { horizontalAnim, scrollOffset } = useAnimatedValues();
+  const {
+    horizontalAnim,
+    scrollOffset,
+    translateX,
+    translateY,
+  } = useAnimatedValues();
   const {
     activeKey,
     keyExtractor,
@@ -65,8 +70,20 @@ function CellRendererComponent<T>(props: Props<T>) {
       heldTanslate.value = translate.value;
     }
     const t = activeKey ? translate.value : heldTanslate.value;
+    if (horizontalAnim.value) {
+      return {
+        transform: [
+          { translateX: t },
+          { translateY: isActive ? translateY.value : 0 },
+        ],
+      };
+    }
+
     return {
-      transform: [horizontalAnim.value ? { translateX: t } : { translateY: t }],
+      transform: [
+        { translateY: t },
+        { translateX: isActive ? translateX.value : 0 },
+      ],
     };
   }, [translate, activeKey]);
 

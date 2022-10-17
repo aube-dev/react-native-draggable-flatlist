@@ -77,6 +77,10 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
     viewableIndexMin,
     viewableIndexMax,
     disabled,
+    translateX,
+    translateY,
+    absoluteX,
+    absoluteY,
   } = useAnimatedValues();
 
   const reset = useStableCallback(() => {
@@ -251,6 +255,8 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
       gestureDisabled.value = disabled.value;
       if (gestureDisabled.value) return;
       panGestureState.value = evt.state;
+      absoluteX.value = evt.absoluteX;
+      absoluteY.value = evt.absoluteY;
     })
     .onUpdate((evt) => {
       if (gestureDisabled.value) return;
@@ -259,6 +265,10 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
         ? evt.translationX
         : evt.translationY;
       touchTranslate.value = translation;
+      translateX.value = evt.translationX;
+      translateY.value = evt.translationY;
+      absoluteX.value = evt.absoluteX;
+      absoluteY.value = evt.absoluteY;
     })
     .onEnd((evt) => {
       if (gestureDisabled.value) return;
@@ -287,6 +297,8 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
           disabled.value = false;
         }
       );
+      translateX.value = withSpring(0, animationConfigRef.current);
+      translateX.value = withSpring(0, animationConfigRef.current);
     })
     .onTouchesDown(() => {
       runOnJS(onContainerTouchStart)();

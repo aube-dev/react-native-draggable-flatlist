@@ -46,6 +46,8 @@ function useSetupAnimatedValues<T>() {
     GestureState.UNDETERMINED
   );
   const touchTranslate = useSharedValue(0);
+  const translateX = useSharedValue(0);
+  const translateY = useSharedValue(0);
 
   const isTouchActiveNative = useSharedValue(false);
 
@@ -158,6 +160,9 @@ function useSetupAnimatedValues<T>() {
     hasMoved.value = 0;
   }, []);
 
+  const absoluteX = useSharedValue(0);
+  const absoluteY = useSharedValue(0);
+
   const value = useMemo(
     () => ({
       activeCellOffset,
@@ -181,6 +186,10 @@ function useSetupAnimatedValues<T>() {
       autoScrollDistance,
       viewableIndexMin,
       viewableIndexMax,
+      translateX,
+      translateY,
+      absoluteX,
+      absoluteY,
     }),
     [
       activeCellOffset,
@@ -204,6 +213,10 @@ function useSetupAnimatedValues<T>() {
       autoScrollDistance,
       viewableIndexMin,
       viewableIndexMax,
+      translateX,
+      translateY,
+      absoluteX,
+      absoluteY,
     ]
   );
 
