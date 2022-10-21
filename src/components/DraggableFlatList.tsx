@@ -292,6 +292,12 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
       disabled.value = true;
       runOnJS(onRelease)(activeIndexAnim.value);
       const springTo = placeholderOffset.value - activeCellOffset.value;
+
+      if (activeIndexAnim.value === spacerIndexAnim.value) {
+        translateX.value = withSpring(0, animationConfigRef.current);
+        translateY.value = withSpring(0, animationConfigRef.current);
+      }
+
       touchTranslate.value = withSpring(
         springTo,
         animationConfigRef.current,
