@@ -303,8 +303,6 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
           disabled.value = false;
         }
       );
-      translateX.value = withSpring(0, animationConfigRef.current);
-      translateY.value = withSpring(0, animationConfigRef.current);
     })
     .onTouchesDown(() => {
       runOnJS(onContainerTouchStart)();
