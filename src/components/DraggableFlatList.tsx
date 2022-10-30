@@ -19,7 +19,9 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import CellRendererComponent from "./CellRendererComponent";
+import CellRendererComponent, {
+  CellRendererComponentProps,
+} from "./CellRendererComponent";
 import { DEFAULT_PROPS, isWeb } from "../constants";
 import PlaceholderItem from "./PlaceholderItem";
 import RowItem from "./RowItem";
@@ -293,7 +295,10 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
       runOnJS(onRelease)(activeIndexAnim.value);
       const springTo = placeholderOffset.value - activeCellOffset.value;
 
-      if (activeIndexAnim.value !== spacerIndexAnim.value) {
+      if (
+        props.allowAnotherDirection &&
+        activeIndexAnim.value !== spacerIndexAnim.value
+      ) {
         translateX.value = withSpring(0, animationConfigRef.current);
         translateY.value = withSpring(0, animationConfigRef.current);
       }
@@ -362,6 +367,16 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
     props.onViewableItemsChanged?.(info);
   });
 
+  const renderCellRendererComponent = useCallback(
+    (cellRendererProps: CellRendererComponentProps<T>) => (
+      <CellRendererComponent
+        {...cellRendererProps}
+        allowAnotherDirection={props.allowAnotherDirection}
+      />
+    ),
+    [props.allowAnotherDirection]
+  );
+
   return (
     <DraggableFlatListProvider
       activeKey={activeKey}
@@ -382,7 +397,7 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
             {...props}
             data={props.data}
             onViewableItemsChanged={onViewableItemsChanged}
-            CellRendererComponent={CellRendererComponent}
+            CellRendererComponent={renderCellRendererComponent}
             ref={flatlistRef}
             onContentSizeChange={onListContentSizeChange}
             scrollEnabled={!activeKey && scrollEnabled}

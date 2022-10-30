@@ -53,6 +53,7 @@ export type DraggableFlatListProps<T> = Modify<
       layout: LayoutChangeEvent["nativeEvent"]["layout"];
       containerRef: React.RefObject<Animated.View>;
     }) => void;
+    allowAnotherDirection?: boolean;
   } & Partial<DefaultProps>
 >;
 

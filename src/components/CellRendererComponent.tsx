@@ -21,15 +21,16 @@ import { useAnimatedValues } from "../context/animatedValueContext";
 import CellProvider from "../context/cellContext";
 import { useStableCallback } from "../hooks/useStableCallback";
 
-type Props<T> = {
+export type CellRendererComponentProps<T> = {
   item: T;
   index: number;
   children: React.ReactNode;
   onLayout?: (e: LayoutChangeEvent) => void;
   style?: StyleProp<ViewStyle>;
+  allowAnotherDirection?: boolean;
 };
 
-function CellRendererComponent<T>(props: Props<T>) {
+function CellRendererComponent<T>(props: CellRendererComponentProps<T>) {
   const { item, index, onLayout, children, ...rest } = props;
 
   const viewRef = useRef<Animated.View>(null);
@@ -74,7 +75,10 @@ function CellRendererComponent<T>(props: Props<T>) {
       return {
         transform: [
           { translateX: t },
-          { translateY: isActive ? translateY.value : 0 },
+          {
+            translateY:
+              isActive && props.allowAnotherDirection ? translateY.value : 0,
+          },
         ],
       };
     }
@@ -82,7 +86,10 @@ function CellRendererComponent<T>(props: Props<T>) {
     return {
       transform: [
         { translateY: t },
-        { translateX: isActive ? translateX.value : 0 },
+        {
+          translateX:
+            isActive && props.allowAnotherDirection ? translateX.value : 0,
+        },
       ],
     };
   }, [translate, activeKey]);
